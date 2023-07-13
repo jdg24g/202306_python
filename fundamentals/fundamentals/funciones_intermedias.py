@@ -1,3 +1,6 @@
+"""
+1)Actualizar valores en diccionarios y listas
+"""
 x = [[5, 2, 3], [10, 8, 9]]
 estudiantes = [
     {'first_name': 'Michael', 'last_name': 'Jordan'},
@@ -27,13 +30,11 @@ print("estudiantes:", estudiantes)
 print("directorio_deportes:", directorio_deportes)
 print("z:", z)
 
-def iterateDictionary(some_list):
-    for diccionario in some_list:
-        elementos = []
-        for clave, valor in diccionario.items():
-            elementos.append(f"{clave} - {valor}")
-        print(", ".join(elementos))
+"""
+2)Iterar a través de una lista de diccionarios
+Crea una función iterateDictionary(some_list)para que, dada una lista de diccionarios, la función recorra cada diccionarios de la lista e imprima cada llave y el valor asociado. Por ejemplo, dada la siguiente lista:
 
+"""
 
 estudiantes = [
     {'first_name': 'Michael', 'last_name': 'Jordan'},
@@ -42,7 +43,24 @@ estudiantes = [
     {'first_name': 'KB', 'last_name': 'Tonel'}
 ]
 
+
+def iterateDictionary(some_list):
+    for diccionario in some_list:
+        elementos = []
+        for clave, valor in diccionario.items():
+            elementos.append(f"{clave} - {valor}")
+        print(", ".join(elementos))
+
+
+
+
 iterateDictionary(estudiantes)
+
+"""
+3)Obtener valores de una lista de diccionarios
+Crea una función iterateDictionary2(key_name, some_list)que, dada una lista de diccionarios y un nombre de clave, la función imprima el valor almacenado en esa clave para cada diccionario. Por ejemplo, iterateDictionary2('name', estudiantes) debería generar:
+
+"""
 
 def iterateDictionary2(key_name, some_list):
     for diccionario in some_list:
@@ -56,7 +74,7 @@ iterateDictionary2('last_name', estudiantes)
 
 
 """
-Iterar a través de un diccionarios con valores de lista
+4)Iterar a través de un diccionarios con valores de lista
 Crea una función printInfo(some_dict)que, dado un diccionario cuyos valores son todos listas, imprima el nombre de cada clave junto con el tamaño de su lista, y luego imprima los valores asociados dentro de la lista de cada clave. Por ejemplo:
 """
 dojo = {
@@ -69,7 +87,4 @@ def printInfo(some_dict):
         print(f"{len(lista)} {clave.upper()}")
         for valor in lista:
             print(valor)
-
-
-
 printInfo(dojo)
