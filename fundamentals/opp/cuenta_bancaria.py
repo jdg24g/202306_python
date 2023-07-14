@@ -1,100 +1,107 @@
-class Usuario:
-    """Representa a un usuario con su nombre y balance.
+div = "=" * 50
+
+class Cuenta:
+    """
+    Clase que representa una cuenta bancaria.
 
     Atributos:
-        nombre (str): El nombre del usuario.
-        monto (float): El balance actual del usuario.
+        interes (float): La tasa de interés aplicada a la cuenta.
+        balance (float): El saldo actual de la cuenta.
+        lista_instancias (list): Una lista que almacena todas las cuentas bancarias creadas.
 
     Métodos:
-        __init__(self, nombre: str) -> None:
-            Inicializa una instancia de Usuario con el nombre proporcionado y un balance inicial de 0.
-
-        cargar_dinero(self, monto: float) -> Usuario:
-            Añade la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
-
-        retirar_dinero(self, monto: float) -> Usuario:
-            Resta la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
-
-        mostrar_balance(self) -> None:
-            Muestra en pantalla el nombre del usuario y su balance actual.
-
-        transferir_dinero(self, monto: float, usuario_destino: Usuario) -> Usuario:
-            Transfiere la cantidad especificada al usuario destino, resta esa cantidad del balance del usuario actual,
-            y muestra en pantalla los balances actualizados de ambos usuarios. Devuelve la instancia actual de Usuario.
+        __init__(interes, balance=0): Inicializa una nueva instancia de la clase Cuenta_Bancaria.
+        depositar(monto): Deposita un monto específico en la cuenta.
+        retiro(monto): Retira un monto específico de la cuenta si hay suficientes fondos.
+        mostrar_info_cuenta(): Muestra información sobre el balance actual de la cuenta.
+        generar_interes(): Calcula y agrega el rendimiento de interés al balance de la cuenta.
+        imprimir_instancias(): Imprime la información de todas las cuentas bancarias creadas.
     """
+    lista_instancias = []
 
-    def __init__(self, nombre: str) -> None:
-        """Inicializa una instancia de Usuario con el nombre proporcionado y un balance inicial de 0.
 
-        Args:
-            nombre (str): El nombre del usuario.
+    def __init__(self, interes, balance = 0):
         """
-        self.nombre = nombre
-        self.monto = 0
+        Inicializa una nueva instancia de la clase Cuenta_Bancaria.
 
-    def cargar_dinero(self, monto: float) -> "Usuario":
-        """Añade la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
-
-        Args:
-            monto (float): La cantidad de dinero a cargar.
-
-        Returns:
-            Usuario: La instancia actual de Usuario.
+        Parámetros:
+            interes (float): La tasa de interés aplicada a la cuenta.
+            balance (float, opcional): El saldo inicial de la cuenta (predeterminado: 0).
         """
-        self.monto += monto
-        return self
+        self.interes = interes
+        self.balance = balance
+        Cuenta.lista_instancias.append(self)
 
-    def retirar_dinero(self, monto: float) -> "Usuario":
-        """Resta la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
 
-        Args:
-            monto (float): La cantidad de dinero a retirar.
-
-        Returns:
-            Usuario: La instancia actual de Usuario.
+    def depositar(self, monto):
         """
-        self.monto -= monto
-        return self
+        Deposita un monto específico en la cuenta.
 
-    def mostrar_balance(self) -> None:
-        """Muestra en pantalla el nombre del usuario y su balance actual."""
-        print(f"Usuario: {self.nombre}, Balance: {self.monto}")
+        Parámetros:
+            monto (float): El monto a depositar en la cuenta.
 
-    def transferir_dinero(self, monto: float, usuario_destino: "Usuario") -> "Usuario":
-        """Transfiere la cantidad especificada al usuario destino, resta esa cantidad del balance del usuario actual,
-        y muestra en pantalla los balances actualizados de ambos usuarios. Devuelve la instancia actual de Usuario.
-
-        Args:
-            monto (float): La cantidad de dinero a transferir.
-            usuario_destino (Usuario): El usuario destino de la transferencia.
-
-        Returns:
-            Usuario: La instancia actual de Usuario.
+        Retorna:
+            self: La instancia actual de la clase Cuenta_Bancaria.
         """
-        self.monto -= monto
-        usuario_destino.monto += monto
-        self.mostrar_balance()
-        usuario_destino.mostrar_balance()
+        self.balance += monto
         return self
     
-class CuentaBancaria:
+
+    def retiro(self,monto):
+        """
+        Retira un monto específico de la cuenta si hay suficientes fondos.
+
+        Parámetros:
+            monto (float): El monto a retirar de la cuenta.
+        """
+        if (self.balance - monto) > 0:
+            self.balance -= monto
+        else:
+            print(f'Lo siento no tienes fondos suficientes en tu cuenta : {self.balance}')
+        return self
     
 
-    def __init__(self) -> None:
-        pass
+    def mostrar_info_cuenta(self):
+        """
+        Muestra información sobre el balance actual de la cuenta.
 
-
-    def deposito(self, amount: float) -> None:
-        pass
-
-    
-    def retiro(self, amount: float) -> None:
-        pass
-
-
-    def mostrar_info_cuenta(self) -> None:
-        pass
+        Retorna:
+            self: La instancia actual de la clase Cuenta_Bancaria.
+        """
+        print(f'Balance: {self.balance}')
+        return self
     
 
-    def generar_interes(self) -> None:
-        pass
+    def generar_interes(self):
+        """
+        Calcula y agrega el rendimiento de interés al balance de la cuenta.
+
+        Retorna:
+            self: La instancia actual de la clase Cuenta_Bancaria.
+        """
+        if self.balance > 0:
+            self.balance += (self.balance * self.interes)
+        else:
+            print('No puedes generar interes porque tu balance es negativo')
+        return self
+    
+
+    @classmethod
+    def imprimir_instancias(cls):
+        """
+        Imprime la información de todas las cuentas bancarias creadas.
+        """
+        for instancia in cls.lista_instancias:
+            instancia.mostrar_info_cuenta()
+
+didier = Cuenta(0.2,100)
+ruth = Cuenta(2.5,200)
+
+
+print(div)
+Cuenta.imprimir_instancias()
+print(div)
+didier.depositar(100).depositar(100).depositar(100).retiro(200).generar_interes().mostrar_info_cuenta()
+print(div)
+ruth.depositar(200).depositar(200).retiro(50).retiro(50).retiro(20).retiro(10).generar_interes().mostrar_info_cuenta()
+print(div)
