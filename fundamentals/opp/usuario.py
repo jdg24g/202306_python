@@ -1,3 +1,6 @@
+linea = "-#" * 40
+def divisoria():
+    print(linea)
 class Usuario:
     """
     Clase que representa a un usuario con un nombre y un balance.
@@ -98,10 +101,12 @@ usuario1.hacer_deposito(100)
 usuario1.hacer_deposito(50)
 usuario1.hacer_deposito(20)
 usuario1.hacer_retiro(30)
-print("=============================")
+
+divisoria()
 
 usuario1.mostrar_balance_usuario()
-print("=============================")
+
+
 
 
 usuario2.hacer_deposito(200)
@@ -109,10 +114,10 @@ usuario2.hacer_deposito(75)
 usuario2.hacer_retiro(100)
 usuario2.hacer_retiro(50)
 
-print("=============================")
+divisoria()
 
 usuario2.mostrar_balance_usuario()
-print("=============================")
+divisoria()
 
 
 usuario3.hacer_deposito(50)
@@ -120,17 +125,15 @@ usuario3.hacer_retiro(20)
 usuario3.hacer_retiro(30)
 usuario3.hacer_retiro(25)
 
-print("=============================")
+divisoria()
 
 usuario3.mostrar_balance_usuario()
-print("=============================")
+divisoria()
 
 
 usuario1.transferir_dinero(usuario3, 50)
 
-
-print("=============================")
 usuario1.mostrar_balance_usuario()
-print("=============================")
+divisoria()
 usuario3.mostrar_balance_usuario()
-print("=============================")
+divisoria()
