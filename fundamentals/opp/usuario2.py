@@ -1,139 +1,93 @@
 class Usuario:
-    """
-    Clase que representa a un usuario con un nombre y un balance.
-    
+    """Representa a un usuario con su nombre y balance.
+
     Atributos:
         nombre (str): El nombre del usuario.
-        balance (float): El balance actual del usuario.
+        monto (float): El balance actual del usuario.
 
     Métodos:
-        __init__(nombre):
-            Inicializa una nueva instancia de la clase Usuario.
-            Establece el nombre del usuario y establece el balance en 0.
+        __init__(self, nombre: str) -> None:
+            Inicializa una instancia de Usuario con el nombre proporcionado y un balance inicial de 0.
 
-        hacer_deposito(monto):
-            Realiza un depósito en la cuenta del usuario.
-            Aumenta el balance actual sumando el monto especificado.
+        cargar_dinero(self, monto: float) -> Usuario:
+            Añade la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
 
-        hacer_retiro(monto):
-            Realiza un retiro de la cuenta del usuario.
-            Disminuye el balance actual restando el monto especificado.
-            Si el saldo es insuficiente, muestra un mensaje de error.
+        retirar_dinero(self, monto: float) -> Usuario:
+            Resta la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
 
-        mostrar_balance_usuario():
-            Muestra el balance actual del usuario en pantalla.
+        mostrar_balance(self) -> None:
+            Muestra en pantalla el nombre del usuario y su balance actual.
 
-        transferir_dinero(otro_usuario, monto):
-            Transfiere una cantidad de dinero desde la cuenta del usuario actual hacia otro usuario.
-            Disminuye el balance actual restando el monto especificado y aumenta el balance del otro usuario.
-            Si el saldo es insuficiente, muestra un mensaje de error.
+        transferir_dinero(self, monto: float, usuario_destino: Usuario) -> Usuario:
+            Transfiere la cantidad especificada al usuario destino, resta esa cantidad del balance del usuario actual,
+            y muestra en pantalla los balances actualizados de ambos usuarios. Devuelve la instancia actual de Usuario.
     """
-    
-    def __init__(self, nombre):
-        self.nombre = nombre
-        self.balance = 0
 
-    def hacer_deposito(self, monto):
-        """
-        Realiza un depósito en la cuenta del usuario.
+    def __init__(self, nombre: str) -> None:
+        """Inicializa una instancia de Usuario con el nombre proporcionado y un balance inicial de 0.
 
         Args:
-            monto (float): El monto a depositar en la cuenta.
+            nombre (str): El nombre del usuario.
+        """
+        self.nombre = nombre
+        self.monto = 0
+
+    def cargar_dinero(self, monto: float) -> "Usuario":
+        """Añade la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
+
+        Args:
+            monto (float): La cantidad de dinero a cargar.
 
         Returns:
-            devuelve la instancia del objeto self
+            Usuario: La instancia actual de Usuario.
         """
-        self.balance += monto
+        self.monto += monto
         return self
 
-    def hacer_retiro(self, monto):
-        """
-        Realiza un retiro de la cuenta del usuario.
+    def retirar_dinero(self, monto: float) -> "Usuario":
+        """Resta la cantidad especificada al balance del usuario y devuelve la instancia actual de Usuario.
 
         Args:
-            monto (float): El monto a retirar de la cuenta.
+            monto (float): La cantidad de dinero a retirar.
 
         Returns:
-            None
+            Usuario: La instancia actual de Usuario.
         """
-        if self.balance >= monto:
-            self.balance -= monto
-            return self
-        else:
-            print(f"Saldo insuficiente para realizar el retiro. del {self.nombre}")
+        self.monto -= monto
+        return self
 
-    def mostrar_balance_usuario(self):
-        """
-        Muestra el balance actual del usuario en pantalla.
+    def mostrar_balance(self) -> None:
+        """Muestra en pantalla el nombre del usuario y su balance actual."""
+        print(f"Usuario: {self.nombre}, Balance: {self.monto}")
 
-        Returns:
-            None
-        """
-        print(f"Balance de {self.nombre}: {self.balance}")
-
-    def transferir_dinero(self, otro_usuario, monto):
-        """
-        Transfiere una cantidad de dinero desde la cuenta del usuario actual hacia otro usuario.
+    def transferir_dinero(self, monto: float, usuario_destino: "Usuario") -> "Usuario":
+        """Transfiere la cantidad especificada al usuario destino, resta esa cantidad del balance del usuario actual,
+        y muestra en pantalla los balances actualizados de ambos usuarios. Devuelve la instancia actual de Usuario.
 
         Args:
-            otro_usuario (Usuario): El objeto de la clase Usuario hacia donde se realizará la transferencia.
-            monto (float): El monto a transferir.
+            monto (float): La cantidad de dinero a transferir.
+            usuario_destino (Usuario): El usuario destino de la transferencia.
 
         Returns:
-            None
+            Usuario: La instancia actual de Usuario.
         """
-        if self.balance >= monto:
-            self.balance -= monto
-            otro_usuario.balance += monto
-            return self
-        else:
-            print("Saldo insuficiente para realizar la transferencia.")
+        self.monto -= monto
+        usuario_destino.monto += monto
+        self.mostrar_balance()
+        usuario_destino.mostrar_balance()
+        return self
 
 
 
-# Crear usuarios
-usuario1 = Usuario("Usuario1")
-usuario2 = Usuario("Usuario2")
-usuario3 = Usuario("Usuario3")
+francisco = Usuario("Francisco Boisier")
+julio = Usuario("Julio Benitez")
+jose = Usuario("Jose Webber")
+
+francisco.cargar_dinero(100).cargar_dinero(200).cargar_dinero(50).retirar_dinero(45).mostrar_balance()
+
+julio.cargar_dinero(1000).cargar_dinero(1000).retirar_dinero(500).retirar_dinero(300).mostrar_balance()
+
+jose.cargar_dinero(1500).retirar_dinero(1000).retirar_dinero(5000).retirar_dinero(3000).mostrar_balance()
 
 
-usuario1.hacer_deposito(100)
-usuario1.hacer_deposito(50)
-usuario1.hacer_deposito(20)
-usuario1.hacer_retiro(30)
-print("=============================")
-
-usuario1.mostrar_balance_usuario()
-print("=============================")
-
-
-usuario2.hacer_deposito(200)
-usuario2.hacer_deposito(75)
-usuario2.hacer_retiro(100)
-usuario2.hacer_retiro(50)
-
-print("=============================")
-
-usuario2.mostrar_balance_usuario()
-print("=============================")
-
-
-usuario3.hacer_deposito(50)
-usuario3.hacer_retiro(20)
-usuario3.hacer_retiro(30)
-usuario3.hacer_retiro(25)
-
-print("=============================")
-
-usuario3.mostrar_balance_usuario()
-print("=============================")
-
-
-usuario1.transferir_dinero(usuario3, 50)
-
-
-print("=============================")
-usuario1.mostrar_balance_usuario()
-print("=============================")
-usuario3.mostrar_balance_usuario()
-print("=============================")
+julio.transferir_dinero(400, francisco)
