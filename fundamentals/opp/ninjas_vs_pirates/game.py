@@ -1,5 +1,7 @@
+from classes.__init__ import *
 from classes.ninja import Ninja
 from classes.pirate import Pirate
+
 
 michelangelo = Ninja("Michelanglo")
 
